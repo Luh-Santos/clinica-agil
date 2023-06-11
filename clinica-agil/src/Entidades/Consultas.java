@@ -4,7 +4,7 @@ public class Consultas {
     private int data;
     private int hora;
     private int especialidade;
-    private Paciente paciente;
+    private String paciente;
 
     public Consultas() {
     }
@@ -33,11 +33,11 @@ public class Consultas {
         this.especialidade = especialidade;
     }
 
-    public Paciente getPaciente() {
+    public String getPaciente() {
         return paciente;
     }
 
-    public void setPaciente(Paciente paciente) {
+    public void setPaciente(String paciente) {
         this.paciente = paciente;
     }
 

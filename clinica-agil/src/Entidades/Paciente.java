@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Paciente {
-    private long id;
+    private int id;
     private String nome;
     private String telefone;
 
@@ -12,11 +12,11 @@ public class Paciente {
     public Paciente() {
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -5,6 +5,7 @@ import Repositorio.RepositorioPaciente;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ServicePaciente {
     static RepositorioPaciente repositorioPaciente = new RepositorioPaciente();
@@ -40,6 +41,21 @@ public class ServicePaciente {
     }
 
 
-
-
+    public static String verificaID(String id) {
+        int parseId = Integer.parseInt(id);
+        int idAtual;
+        String nome = "0";
+        for (Paciente pacientes : repositorioPaciente.listaPacientes) {
+            idAtual = pacientes.getId();
+            if (Objects.equals(pacientes.getId(), parseId)) {
+                nome = pacientes.getNome();
+            }
+        }
+        if (nome == "0"){
+            System.out.println(nome);
+            return "erro";
+        } else {
+            return nome;
+        }
+    }
 }
