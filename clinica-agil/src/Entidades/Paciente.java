@@ -1,9 +1,13 @@
 package Entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Paciente {
     private long id;
     private String nome;
     private String telefone;
+
 
     public Paciente() {
     }
@@ -31,4 +35,5 @@ public class Paciente {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
 }

@@ -20,6 +20,7 @@ public class RepositorioPaciente {
 
     public List<Paciente> listarPaciente() {
         for (Paciente paciente : listaPacientes) {
+            System.out.println("Id: "+paciente.getId());
             System.out.println("Nome: "+paciente.getNome());
             System.out.println("Telefone: "+paciente.getTelefone());
         }

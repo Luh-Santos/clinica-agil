@@ -11,24 +11,32 @@ public class ServicePaciente {
 
     public static boolean salvaPaciente(String nome, String telefone) {
         int contador = 0;
+        int contadorPessoas = 0;
         Paciente paciente = new Paciente();
         paciente.setNome(nome);
         paciente.setTelefone(telefone);
         for (Paciente pacientes : repositorioPaciente.listaPacientes) {
             if (pacientes.getTelefone().equals(paciente.getTelefone())) {
                 contador += 1;
+                contadorPessoas += 1;
             } else {
                 contador += 0;
+                contadorPessoas += 1;
             }
         }
 
         if (contador == 0) {
+            paciente.setId(contadorPessoas);
             repositorioPaciente.salvaPaciente(paciente);
             return true;
         } else {
             return false;
         }
 
+    }
+
+    public static void listarPaciente(){
+        repositorioPaciente.listarPaciente();
     }
 
 
