@@ -19,7 +19,6 @@ public class ServiceConsultas {
         consulta.setEspecialidade(especialidade);
         consulta.setPaciente(nome);
         RepositorioConsultas.salvaConsulta(consulta);
-        RepositorioConsultas.listarConsultas();
     }
 
     public static void selecionarEspecialidade(String nome) {
@@ -31,9 +30,9 @@ public class ServiceConsultas {
         switch (especialidade){
             case "1": selecionarDataClinico(nome);
                 break;
-            case "2": selecionarDataPediatra();
+            case "2": selecionarDataPediatra(nome);
             break;
-            case "3": selecionarDataPsicologo();
+            case "3": selecionarDataPsicologo(nome);
             break;
             default:
                 System.out.println("Comando não identificado, tente novamente");
@@ -64,20 +63,28 @@ public class ServiceConsultas {
         }
     }
 
-    public static void selecionarDataPediatra() {
+    public static void selecionarDataPediatra(String nome) {
         System.out.println("Selecione a data: ");
         System.out.println("1 - terça");
         System.out.println("2 - quinta");
         String data = entrada.nextLine();
         switch (data){
             case "1":
+                selecionarHoraPediatra(1, nome);
+                break;
+            case "3":
+                selecionarHoraPediatra(2, nome);
+                break;
+            default:
+                System.out.println("Comando não identificado, tente novamente");
+                selecionarDataPediatra(nome);
 
 
 
         }
 
     }
-    public static void selecionarDataPsicologo() {
+    public static void selecionarDataPsicologo(String nome) {
         System.out.println("Selecione a data: ");
         System.out.println("1 - segunda");
         System.out.println("2 - quarta");
@@ -85,9 +92,17 @@ public class ServiceConsultas {
         String data = entrada.nextLine();
         switch (data){
             case "1":
-
-
-
+            selecionarHoraPsicologo(1, nome);
+            break;
+            case "2":
+                selecionarHoraPsicologo(2, nome);
+                break;
+            case "3":
+                selecionarHoraPsicologo(3, nome);
+                break;
+            default:
+                System.out.println("Comando não identificado, tente novamente");
+                selecionarDataPsicologo(nome);
         }
 
     }
@@ -106,7 +121,7 @@ public class ServiceConsultas {
         hora = entrada.nextLine();
 
         int horaCerta = parseInt(hora);
-        boolean disponivel = verificaDisponibilidade(data, horaCerta);
+        boolean disponivel = verificaDisponibilidade(data, horaCerta, 1);
         if(disponivel == true) {
             salvaConsulta(data, horaCerta, 1, nome);
         }
@@ -115,47 +130,55 @@ public class ServiceConsultas {
     }
 
 
-    public static void selecionarHoraPediatra() {
+    public static void selecionarHoraPediatra(int data, String nome) {
         System.out.println("Selecione a hora: ");
-        System.out.println("1 - segunda");
-        System.out.println("2 - quarta");
-        System.out.println("3 - sexta");
+        System.out.println("1 - 10:00");
+        System.out.println("2 - 11:00");
+        System.out.println("3 - 13:00");
+        System.out.println("4 - 14:00");
         String hora = entrada.nextLine();
-        switch (hora){
-            case "1":
 
-
-
-
+        int horaCerta = parseInt(hora);
+        boolean disponivel = verificaDisponibilidade(data, horaCerta, 2);
+        if(disponivel == true) {
+            salvaConsulta(data, horaCerta, 2, nome);
         }
 
     }
-    public static void selecionarHoraPsicologo() {
+    public static void selecionarHoraPsicologo(int data, String nome) {
         System.out.println("Selecione a hora: ");
-        System.out.println("1 - segunda");
-        System.out.println("2 - quarta");
-        System.out.println("3 - sexta");
+        System.out.println("1 - 10:00");
+        System.out.println("2 - 11:00");
+        System.out.println("3 - 13:00");
+        System.out.println("4 - 14:00");
+        System.out.println("5 - 15:00");
         String hora = entrada.nextLine();
-        switch (hora){
-            case "1":
 
-
-
-
+        int horaCerta = parseInt(hora);
+        boolean disponivel = verificaDisponibilidade(data, horaCerta, 2);
+        if(disponivel == true) {
+            salvaConsulta(data, horaCerta, 3, nome);
         }
 
+
     }
-    private static boolean verificaDisponibilidade(int data, int hora) {
+
+    //Não consegui fazer esse validador funcionar, não sei onde está o erro, mas está salvando no mesmo
+    //horário~dia de outras consultas.
+    private static boolean verificaDisponibilidade(int data, int hora, int especialidade) {
         boolean resultado = false;
+        int contador = 0;
         for (Consultas consulta : repositorioConsultas.listaConsultas){
-            System.out.println("entra");
-            if(consulta.getData() == data && consulta.getHora() == hora) {
-                System.out.println("Horário não disponível, tente novamente");
-                resultado = false;
-            }else {
-                System.out.println("teste");
-                resultado = true;
+            if(consulta.getData() == data && consulta.getHora() == hora && consulta.getEspecialidade() == especialidade) {
+                contador += 1;
             }
+        }
+        if(contador > 0){
+            System.out.println("Horário não disponível, tente novamente");
+            resultado = false;
+        }else{
+            System.out.println("Consulta marcada com sucesso!\n");
+            resultado = true;
         }
         return resultado;
     }

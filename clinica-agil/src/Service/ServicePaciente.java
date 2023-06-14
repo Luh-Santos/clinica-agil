@@ -52,7 +52,6 @@ public class ServicePaciente {
             }
         }
         if (nome == "0"){
-            System.out.println(nome);
             return "erro";
         } else {
             return nome;
